@@ -1,0 +1,48 @@
+<!doctype html> {% include 'static.html' %} {% include 'header.html' %}
+<html>
+
+<body>
+    {% if error %}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+    {% else %}
+    <div class="row col-md-6 offset-md-2">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Transaction List</h4>
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Transaction Type</th>
+                            <th>Currency</th>
+                            <th>Amount</th>
+                            <th>Value Date</th>
+                            <th>Type</th>
+                            <th>Transaction ID</th>
+                            <th>Booking Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for val in transactions.response.transactions %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{val._type}}</td>
+                            <td>{{val.currency}}</td>
+                            <td>{{val.amount}}</td>
+                            <td>{{val.valueDate}}</td>
+                            <td>{{val.typeDescription}}</td>
+                            <td>{{val.transactionId}}</td>
+                            <td>{{val.bookingDate}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
