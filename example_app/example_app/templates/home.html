@@ -1,0 +1,33 @@
+<!doctype html> {% include 'static.html' %} {% include 'header.html' %}
+<html>
+
+<body>
+    <div class="jumbotron">
+        <h1 class="display-3">Welcome to the Open Banking toy APP!</h1>
+        <p class="lead">This is a simple example application which shows how the Nordeas Open Banking API can be used.</p>
+        <hr class="my-4">
+        <div class="alert alert-danger">
+            <p>Note that this is intented to be an example how you can use the API programmatically, <strong>do not use this in prodcution!</strong> There are many important missing features in this app, notably proper exception handling and lack of TLS.</p>
+        </div>
+        <p>Use the navbar above to explore this toy app.</p>
+        <p>For more information about the API, click the learn more below to get more information about the API</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="https://developer.nordeaopenbanking.com/app/docs" role="button">Learn more</a>
+        </p>
+    </div>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Quickstart guide</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Read this to get started with this APP</h6>
+            <p class="card-text">Before using this APP, make sure that you configure your client id and client secret to the applications config file, refer to the applications readme <a href="https://github.com/NordeaOB/examples" class="card-link">here.</a></p>
+            <p class="card-text">
+                Before you can use the APP, please navigate to the <a href="/authenticate" class="card-link">Generate access token</a> and generate your access token. It will be saved to a cookie. You can always generate a new one by just clicking the generate token button.
+            </p>
+            <p class="card-text">
+                If you experience any issues with this app or find a bug, please open a new issue in <a href="https://github.com/NordeaOB/examples/issues" class="card-link">GitHub.</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

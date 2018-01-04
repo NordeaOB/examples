@@ -1,0 +1,113 @@
+<!doctype html> {% include 'static.html' %} {% include 'header.html' %}
+<html>
+
+<body>
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% else %}
+    <div class="row col-md-6 offset-md-2">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Payments</h4>
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Debtor</th>
+                            <th>Creditor</th>
+                            <th>Message</th>
+                            <th>Name</th>
+                            <th>Currency</th>
+                            <th>Amount</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for val in payments.response.payments %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{val.debtor._accountId}}</td>
+                            <td>{{val.creditor.account.value}}</td>
+                            <td>{{val.message}}</td>
+                            <td>{{val.name}}</td>
+                            <td>{{val.currency}}</td>
+                            <td>{{val.amount}}</td>
+                            <td>
+                                {% if val.paymentStatus == "PendingConfirmation" %}
+                                <form action="/confirm_payment" method="POST">
+                                    <input type="hidden" name="payment_id" value="{{val._id}}">
+                                    <button type="submit" class="btn btn-primary btn-sm">Confirm This Payment</button>
+                                </form>
+                                {% else %} {{val.paymentStatus}} {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %} {% if not error %}
+    <div class="row">
+        <div class="col-md-6 offset-md-2">
+            <div class="card card-outline-secondary">
+                <div class="card-header">
+                    <h3 class="mb-0">Make a new payment!</h3>
+                </div>
+                <div class="card-block">
+                    <form class="form-horizontal" action="/payments" method="POST">
+                        <fieldset>
+                            <!-- Form Name -->
+                            <legend>Payment Details</legend>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="amount">Amount</label>
+                                <div class="col-md-6">
+                                    <input id="amount" name="amount" type="text" placeholder="156.87" class="form-control input-md" required="">
+                                </div>
+                            </div>
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="account_id">From Account</label>
+                                <div class="col-md-6">
+                                    <select id="account_id" name="account_id" class="form-control">
+                                        {% for val in accounts.response.accounts %}
+                                        <option value="{{val._id}}">{{val._id}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="beneficiary">Beneficiary Account</label>
+                                <div class="col-md-6">
+                                    <input id="beneficiary" name="beneficiary" type="text" placeholder="FI1350001520003240081" class="form-control input-md" required="">
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="name">Beneficiary Name</label>
+                                <div class="col-md-6">
+                                    <input id="name" name="name" type="text" placeholder="John Smith" class="form-control input-md" required="">
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="message">Message for the Beneficiary</label>
+                                <div class="col-md-6">
+                                    <input id="message" name="message" type="text" placeholder="This is an example message!" class="form-control input-md" required="">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary btn-lg">Make Payment!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>

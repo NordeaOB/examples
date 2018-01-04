@@ -1,0 +1,59 @@
+<!doctype html> {% include 'static.html' %} {% include 'header.html' %}
+<html>
+
+<body>
+    {% if error %}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+    {% else %}
+    <div class="row col-md-6 offset-md-1">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Account details</h4>
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Status</th>
+                            <th>Product</th>
+                            <th>Account Number</th>
+                            <th>Latest Transaction Booking Date</th>
+                            <th>Country</th>
+                            <th>Booked Balance</th>
+                            <th>Value Date Balance</th>
+                            <th>Currency</th>
+                            <th>Available Balance</th>
+                            <th>Owner</th>
+                            <th>Account Type</th>
+                            <th>Credit Limit</th>
+                            <th>Bank</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{details.response.status}}</td>
+                            <td>{{details.response.product}}</td>
+                            <td>{{details.response.accountNumber.value}}</td>
+                            <td>{{details.response.latestTransactionBookingDate}}</td>
+                            <td>{{details.response.country}}</td>
+                            <td>{{details.response.bookedBalance}}</td>
+                            <td>{{details.response.valueDatedBalance}}</td>
+                            <td>{{details.response.currency}}</td>
+                            <td>{{details.response.availableBalance}}</td>
+                            <td>{{details.response.ownerName}}</td>
+                            <td>{{details.response.accountType}}</td>
+                            <td>{{details.response.creditLimit}}</td>
+                            <td>{{details.response.bank.name}} - {{details.response.bank.bic}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>

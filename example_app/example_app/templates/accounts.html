@@ -1,0 +1,55 @@
+<!doctype html> {% include 'static.html' %} {% include 'header.html' %}
+<html>
+
+<body>
+    {%if error %}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+    {% else %}
+    <div class="row col-md-6 offset-md-2">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Account list</h4>
+                <table class="table">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Account</th>
+                            <th>Country</th>
+                            <th>Booked Balance</th>
+                            <th>Value Date Balance</th>
+                            <th>Currency</th>
+                            <th>Available Balance</th>
+                            <th>Owner Name</th>
+                            <th>Account Details</th>
+                            <th>Transaction List</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for val in accounts.response.accounts %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{val.product}}</td>
+                            <td>{{val.accountNumber.value}}</td>
+                            <td>{{val.country}}</td>
+                            <td>{{val.bookedBalance}}</td>
+                            <td>{{val.valueDatedBalance}}</td>
+                            <td>{{val.currency}}</td>
+                            <td>{{val.availableBalance}}</td>
+                            <td>{{val.ownerName}}</td>
+                            <td><a href="{{ url_for('account_details') }}?account_id={{val._id}}">Account Details</a>
+                                <td><a href="{{ url_for('account_transactions') }}?account_id={{val._id}}">Transactions</a>
+                                </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
