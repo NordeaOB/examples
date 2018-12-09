@@ -29,7 +29,7 @@ class NordeaWrapper {
     $this->clientId = $ini_array['clientId'];
     $this->clientSecret = $ini_array['clientSecret'];
     $this->redirectUri = $ini_array['redirectUri'];
-    $this->authenticationUrl = $this->apiUrl . 'v1/authentication';
+    $this->authenticationUrl = $this->apiUrl . 'v2/authorize';
     $this->accessTokenUrl = $this->authenticationUrl . '/access_token';
     $this->accountsUrl = $this->apiUrl . 'v2/accounts';
     $this->paymentsUrl = $this->apiUrl . 'v2/payments/sepa';
@@ -64,7 +64,10 @@ class NordeaWrapper {
    */
   private function getCode() {
     $url = $this->authenticationUrl . '?client_id=' . $this->clientId
-      .  '&redirect_uri=' . $this->redirectUri . '&state=';
+      .  '&redirect_uri=' . $this->redirectUri
+      .  '&state=oauth2'
+      .  '&scope=ACCOUNTS_BASIC,ACCOUNTS_BALANCES,ACCOUNTS_DETAILS,ACCOUNTS_TRANSACTIONS,PAYMENTS_MULTIPLE'
+      .  '&duration=1234';
     
     $response = $this->curlRequest($url);
     $body = substr($response, $curl_info['header_size']);
