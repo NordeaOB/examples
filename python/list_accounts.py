@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # get valid access token
     access_token = generate_access_token()
     # endpoint we query
-    endpoint = 'v2/accounts'
+    endpoint = 'v3/accounts'
     # set headers and make the request
     headers = {
         'X-IBM-Client-Id': CLIENT_ID,

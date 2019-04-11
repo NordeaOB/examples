@@ -8,7 +8,7 @@ CLIENT_ID = 'your client id here'
 CLIENT_SECRET = 'your client secret here'
 
 if __name__ == '__main__':
-    endpoint = 'v2/payments/sepa'
+    endpoint = 'v3/payments/domestic'
     access_token = generate_access_token()
     headers = {
         'X-IBM-Client-Id': CLIENT_ID,
@@ -17,31 +17,39 @@ if __name__ == '__main__':
         'X-Response-Scenarios': 'AuthorizationSkipAccessControl',
         'content-type': 'application/json'
     }
+
     payload = {
-        "amount": "621000.45",
-        "creditor": {
-            "account": {
-                "_type": "IBAN",
-                "value": "FI1350001520000081"
-            },
-            "message": "This is a message, 123!",
-            "name": "Beneficiary name",
-            "reference": {
-                "_type": "RF",
-                "value": "RF18539007547034"
-            }
-        },
-        "currency": "EUR",
-        "debtor": {
-            "_accountId": "FI6593857450293470-EUR"
-        }
+        "amount" : "100.12",
+  "currency" : "DKK",
+  "debtor" : {
+    "account" : {
+      "value" : "DK6120301544118028",
+      "_type" : "IBAN",
+      "currency" : "DKK"
+    }
+  },
+  "creditor" : {
+    "account" : {
+      "currency": "DKK",
+      "value" : "DK3420301544117544",
+      "_type" : "IBAN"
+    },
+    "name" : "Creditor name",
+    "message" : "wow",
+    "reference" : {
+      "value" : "RF11223344",
+      "_type" : "RF"
+    }
+  }
     }
     r = requests.post(API_URI + endpoint, headers=headers,
                       data=json.dumps(payload))
+
     if not r.status_code == requests.codes.created:
         raise Exception(r.text)
     response = r.json()
     payment_id = response['response']['_id']
+
     # print the payment id
     print(payment_id)
 
