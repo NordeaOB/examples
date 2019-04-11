@@ -4,7 +4,7 @@ import requests
 API_URI = 'https://api.nordeaopenbanking.com/'
 CLIENT_ID = 'your client id here'
 CLIENT_SECRET = 'your client secret here'
-REDIRECT_URI = 'http://httpbin.org/get'
+REDIRECT_URI = 'http://httpbin.org/'
 
 """
 This is an example how to generate the access token from the scratch.
@@ -14,11 +14,14 @@ or by running this file i.e. 'python generate_access_token.py'
 """
 
 def get_code():
-    endpoint = 'v1/authentication'
+    endpoint = 'v3/authorize'
     payload = {
         'client_id': CLIENT_ID,
-        'redirect_uri': REDIRECT_URI,
-        'state': ''
+        'redirect_uri': REDIRECT_URI + "anything",
+        'state': 'oauth2',
+		'scope': 'ACCOUNTS_BASIC,ACCOUNTS_BALANCES,ACCOUNTS_DETAILS,ACCOUNTS_TRANSACTIONS,PAYMENTS_MULTIPLE',
+		'duration': '1234',
+        'country': 'DK'
     }
     r = requests.get(API_URI + endpoint, params=payload)
     if not r.status_code == requests.codes.ok:
@@ -29,17 +32,21 @@ def get_code():
 
 
 def get_access_token(code):
-    endpoint = 'v1/authentication/access_token'
+    endpoint = 'v3/authorize/token'
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'X-IBM-Client-Id': CLIENT_ID,
-        'X-IBM-Client-Secret': CLIENT_SECRET
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+        'cache-control' : "no-cache",
+        'Accept':'application/json'
     }
 
     payload = {
         'code': code,
-        'redirect_uri': REDIRECT_URI
+        'redirect_uri': REDIRECT_URI + "anything",
+        'grant_type': 'authorization_code'
     }
+
     r = requests.post(API_URI + endpoint, data=payload, headers=headers)
     if not r.status_code == requests.codes.ok:
         raise Exception(r.text)

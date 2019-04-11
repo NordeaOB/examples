@@ -7,7 +7,8 @@ CLIENT_ID = 'your client id here'
 CLIENT_SECRET = 'your client secret here'
 
 if __name__ == '__main__':
-    endpoint = 'v2/payments/sepa/'
+    account_id = 'DK20301544117544-DKK' # try changing this
+    endpoint = 'v3/accounts/{}/transactions'.format(account_id)
     access_token = generate_access_token()
     headers = {
         'X-IBM-Client-Id': CLIENT_ID,
