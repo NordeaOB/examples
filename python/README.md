@@ -24,7 +24,7 @@ It can be run by issuing `python generate_access_token.py` or the `generate_acce
 
 ### Get payments
 
-The `get_payments,py` gets list of payments.
+The `get_payments.py` gets list of payments.
 
 ### Initiate payment
 
